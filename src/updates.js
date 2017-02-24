@@ -1,14 +1,15 @@
 import { firebase } from 'refire-app'
 import includes from 'lodash/includes'
+import {baseURL} from './config'
 
 export function newThread({ boardId, topic, text, user }) {
   const ref = firebase.database().ref()
-  const threadKey = ref.child("threads").push().key
-  const postKey = ref.child("posts").push().key
+  const threadKey = ref.child(`${baseURL}threads`).push().key
+  const postKey = ref.child(`${baseURL}posts`).push().key
 
   return {
-    [`boards/${boardId}/threads/${threadKey}`]: true,
-    [`threads/${threadKey}`]: {
+    [`${baseURL}boards/${boardId}/threads/${threadKey}`]: true,
+    [`${baseURL}threads/${threadKey}`]: {
       title: topic,
       boardId: boardId,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
@@ -22,7 +23,7 @@ export function newThread({ boardId, topic, text, user }) {
         [postKey]: true,
       },
     },
-    [`posts/${postKey}`]: {
+    [`${baseURL}posts/${postKey}`]: {
       body: text,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       threadId: threadKey,
@@ -41,34 +42,34 @@ export function deleteThread({ threadKey, thread }) {
   const posts = Object.keys(thread.posts).reduce((paths, postId) => {
     return {
       ...paths,
-      [`posts/${postId}`]: null,
+      [`${baseURL}posts/${postId}`]: null,
       [`users/${thread.user.id}/posts/${postId}`]: null,
     }
   }, {})
 
   return {
     ...posts,
-    [`threads/${threadKey}`]: null,
-    [`boards/${thread.boardId}/threads/${threadKey}`]: null,
+    [`${baseURL}threads/${threadKey}`]: null,
+    [`${baseURL}boards/${thread.boardId}/threads/${threadKey}`]: null,
     [`users/${thread.user.id}/threadsStarted/${threadKey}`]: null,
   }
 }
 
 export function toggleThreadLocked({ threadKey, thread }) {
   return {
-    [`threads/${threadKey}/locked`]: !thread.locked,
+    [`${baseURL}threads/${threadKey}/locked`]: !thread.locked,
   }
 }
 
 export function replyToThread({ threadKey, text, replyToKey, user }) {
   const ref = firebase.database().ref()
-  const postKey = ref.child("posts").push().key
+  const postKey = ref.child(`${baseURL}posts`).push().key
   replyToKey = replyToKey === undefined ? null : replyToKey
 
   return {
-    [`threads/${threadKey}/posts/${postKey}`]: true,
-    [`threads/${threadKey}/lastPostAt`]: firebase.database.ServerValue.TIMESTAMP,
-    [`posts/${postKey}`]: {
+    [`${baseURL}threads/${threadKey}/posts/${postKey}`]: true,
+    [`${baseURL}threads/${threadKey}/lastPostAt`]: firebase.database.ServerValue.TIMESTAMP,
+    [`${baseURL}posts/${postKey}`]: {
       body: text,
       createdAt: firebase.database.ServerValue.TIMESTAMP,
       threadId: threadKey,
@@ -85,8 +86,8 @@ export function replyToThread({ threadKey, text, replyToKey, user }) {
 
 export function deletePost({ postKey, post }) {
   return {
-    [`threads/${post.threadId}/posts/${postKey}`]: null,
-    [`posts/${postKey}`]: null,
+    [`${baseURL}threads/${post.threadId}/posts/${postKey}`]: null,
+    [`${baseURL}posts/${postKey}`]: null,
     [`users/${post.user.id}/posts/${postKey}`]: null,
   }
 }
@@ -100,16 +101,16 @@ export function saveSetting({ userId, setting, value }) {
 export function toggleUpvote({ postKey, post, user }) {
   const value = includes(Object.keys(post.value.likes || {}),user.uid) ? null : true
   return {
-    [`posts/${postKey}/likes/${user.uid}`]: value,
+    [`${baseURL}posts/${postKey}/likes/${user.uid}`]: value,
     [`users/${user.uid}/likes/${postKey}`]: value,
   }
 }
 
 export function savePost({ postKey, text, user }) {
   return {
-    [`posts/${postKey}/body`]: text,
-    [`posts/${postKey}/edited`]: true,
-    [`posts/${postKey}/editedLast`]: firebase.database.ServerValue.TIMESTAMP,
-    [`posts/${postKey}/editedBy`]: user.uid,
+    [`${baseURL}posts/${postKey}/body`]: text,
+    [`${baseURL}posts/${postKey}/edited`]: true,
+    [`${baseURL}posts/${postKey}/editedLast`]: firebase.database.ServerValue.TIMESTAMP,
+    [`${baseURL}posts/${postKey}/editedBy`]: user.uid,
   }
 }

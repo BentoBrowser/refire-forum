@@ -1,19 +1,21 @@
+import {baseURL} from './config';
+
 export default {
   "categories": {
     type: "Array",
     query: (ref) => ref.orderByChild("active").equalTo(true),
-    path: "categories",
+    path: `${baseURL}categories`,
   },
   "boards": {
     type: "Array",
     query: (ref) => ref.orderByChild("active").equalTo(true),
-    path: "boards",
+    path: `${baseURL}boards`,
   },
   "board": {
     type: "Object",
     path: (state, params) => (
       params.boardId
-        ? `boards/${params.boardId}`
+      ? `${baseURL}boards/${params.boardId}`
         : null
     ),
   },
@@ -21,7 +23,7 @@ export default {
     populate: (key) => `threads/${key}`,
     path: (state, params) => (
       params.boardId
-        ? `boards/${params.boardId}/threads`
+      ? `${baseURL}boards/${params.boardId}/threads`
         : null
     ),
   },
@@ -29,7 +31,7 @@ export default {
     type: "Object",
     path: (state, params) => (
       params.threadId
-        ? `threads/${params.threadId}`
+      ? `${baseURL}threads/${params.threadId}`
         : null
     ),
   },
@@ -37,7 +39,7 @@ export default {
     populate: (key) => `posts/${key}`,
     path: (state, params) => (
       params.threadId
-        ? `threads/${params.threadId}/posts`
+      ? `${baseURL}threads/${params.threadId}/posts`
         : null
     ),
   },
@@ -70,11 +72,11 @@ export default {
     type: "Array",
     path: (state) => (
       state.firebase.authenticatedUser
-        ? "adminUsers"
+        ? `${baseURL}adminUsers`
         : null
     ),
   },
   "settings": {
-    path: "settings",
+  path: `${baseURL}settings`,
   },
 }
