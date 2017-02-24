@@ -20,7 +20,7 @@ export default {
     ),
   },
   "boardThreads": {
-    populate: (key) => `threads/${key}`,
+    populate: (key) => `${baseURL}threads/${key}`,
     path: (state, params) => (
       params.boardId
       ? `${baseURL}boards/${params.boardId}/threads`
@@ -36,7 +36,7 @@ export default {
     ),
   },
   "threadPosts": {
-    populate: (key) => `posts/${key}`,
+    populate: (key) => `${baseURL}posts/${key}`,
     path: (state, params) => (
       params.threadId
       ? `${baseURL}threads/${params.threadId}/posts`
@@ -60,7 +60,7 @@ export default {
     ),
   },
   "profileThreadsStarted": {
-    populate: (key) => `threads/${key}`,
+    populate: (key) => `${baseURL}threads/${key}`,
     query: (ref) => ref.orderByKey().limitToLast(10),
     path: (state, params) => (
       params.uid
