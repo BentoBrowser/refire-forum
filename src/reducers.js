@@ -2,11 +2,10 @@ import { USER_AUTHENTICATED, USER_UNAUTHENTICATED } from 'refire-app'
 
 export const userReducer = (state = null, action) => {
   const { payload } = action
-  if (action.type === USER_AUTHENTICATED) {
+  if (action.type === USER_AUTHENTICATED && !firebase.auth().currentUser.isAnonymous) {
     const { uid, providerId, displayName, photoURL, email } = payload
     return {
       uid,
-      provider: providerId,
       displayName,
       profileImageURL: photoURL,
     }

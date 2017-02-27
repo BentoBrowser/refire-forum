@@ -112,28 +112,6 @@ class AuthenticationMenu extends Component {
               </DropdownItem>
             </FirebaseOAuth>
             <FirebaseOAuth
-              provider="github"
-              flow="popup"
-              onError={this.onError}
-              onClick={this.toggleDropdown}
-            >
-              <DropdownItem className={styles.menuAction}>
-                <GithubIcon size="20px" />
-                <span className={styles.menuItemText}>Github</span>
-              </DropdownItem>
-            </FirebaseOAuth>
-            <FirebaseOAuth
-              provider="twitter"
-              flow="popup"
-              onError={this.onError}
-              onClick={this.toggleDropdown}
-            >
-              <DropdownItem className={styles.menuAction}>
-                <TwitterIcon size="20px" color="#00aced" />
-                <span className={styles.menuItemText}>Twitter</span>
-              </DropdownItem>
-            </FirebaseOAuth>
-            <FirebaseOAuth
               provider="facebook"
               flow="popup"
               onError={this.onError}

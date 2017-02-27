@@ -37,10 +37,9 @@ refireApp({
   pathParams: (state) => state.routing.params,
   onAuth: (authData, ref) => {
     // update users/:uid with latest user data after successful authentication
-    if (authData && authData.uid) {
-      const { uid, providerId, displayName, photoURL, email } = authData
+    if (authData && authData.uid && !authData.isAnonymous) {
+      const { uid, displayName, photoURL, email } = authData
       ref.child(`users/${uid}`).update({
-        provider: providerId,
         displayName,
         profileImageURL: photoURL,
         lastLoginAt: firebase.database.ServerValue.TIMESTAMP,
