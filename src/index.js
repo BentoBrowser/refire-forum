@@ -39,13 +39,13 @@ refireApp({
     // update users/:uid with latest user data after successful authentication
     if (authData && authData.uid && !authData.isAnonymous) {
       const { uid, displayName, photoURL, email } = authData
-      ref.child(`users/${uid}`).update({
+      ref.child(`${baseURL}users/${uid}`).update({
         displayName,
         profileImageURL: photoURL,
         lastLoginAt: firebase.database.ServerValue.TIMESTAMP,
       })
       // set registeredAt to current timestamp if this is the first login
-      ref.child(`users/${uid}/registeredAt`).transaction((registeredAt) => {
+      ref.child(`${baseURL}users/${uid}/registeredAt`).transaction((registeredAt) => {
         if (!registeredAt) {
           return firebase.database.ServerValue.TIMESTAMP
         }

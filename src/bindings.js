@@ -47,7 +47,7 @@ export default {
     type: "Object",
     path: (state) => (
       state.firebase.authenticatedUser
-        ? `users/${state.firebase.authenticatedUser.uid}`
+        ? `${baseURL}users/${state.firebase.authenticatedUser.uid}`
         : null
     ),
   },
@@ -55,7 +55,7 @@ export default {
     type: "Object",
     path: (state, params) => (
       params.uid
-        ? `users/${params.uid}`
+        ? `${baseURL}users/${params.uid}`
         : null
     ),
   },
@@ -64,7 +64,7 @@ export default {
     query: (ref) => ref.orderByKey().limitToLast(10),
     path: (state, params) => (
       params.uid
-        ? `users/${params.uid}/threadsStarted`
+        ? `${baseURL}users/${params.uid}/threadsStarted`
         : null
     ),
   },

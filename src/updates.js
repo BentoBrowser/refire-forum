@@ -33,8 +33,8 @@ export function newThread({ boardId, topic, text, user }) {
         id: user.uid,
       },
     },
-    [`users/${user.uid}/threadsStarted/${threadKey}`]: true,
-    [`users/${user.uid}/posts/${postKey}`]: true,
+    [`${baseURL}users/${user.uid}/threadsStarted/${threadKey}`]: true,
+    [`${baseURL}users/${user.uid}/posts/${postKey}`]: true,
   }
 }
 
@@ -43,7 +43,7 @@ export function deleteThread({ threadKey, thread }) {
     return {
       ...paths,
       [`${baseURL}posts/${postId}`]: null,
-      [`users/${thread.user.id}/posts/${postId}`]: null,
+      [`${baseURL}users/${thread.user.id}/posts/${postId}`]: null,
     }
   }, {})
 
@@ -51,7 +51,7 @@ export function deleteThread({ threadKey, thread }) {
     ...posts,
     [`${baseURL}threads/${threadKey}`]: null,
     [`${baseURL}boards/${thread.boardId}/threads/${threadKey}`]: null,
-    [`users/${thread.user.id}/threadsStarted/${threadKey}`]: null,
+    [`${baseURL}users/${thread.user.id}/threadsStarted/${threadKey}`]: null,
   }
 }
 
@@ -80,7 +80,7 @@ export function replyToThread({ threadKey, text, replyToKey, user }) {
         id: user.uid,
       },
     },
-    [`users/${user.uid}/posts/${postKey}`]: true,
+    [`${baseURL}users/${user.uid}/posts/${postKey}`]: true,
   }
 }
 
@@ -88,13 +88,13 @@ export function deletePost({ postKey, post }) {
   return {
     [`${baseURL}threads/${post.threadId}/posts/${postKey}`]: null,
     [`${baseURL}posts/${postKey}`]: null,
-    [`users/${post.user.id}/posts/${postKey}`]: null,
+    [`${baseURL}users/${post.user.id}/posts/${postKey}`]: null,
   }
 }
 
 export function saveSetting({ userId, setting, value }) {
   return {
-    [`users/${userId}/settings/${setting}`]: value,
+    [`${baseURL}users/${userId}/settings/${setting}`]: value,
   }
 }
 
@@ -102,7 +102,7 @@ export function toggleUpvote({ postKey, post, user }) {
   const value = includes(Object.keys(post.value.likes || {}),user.uid) ? null : true
   return {
     [`${baseURL}posts/${postKey}/likes/${user.uid}`]: value,
-    [`users/${user.uid}/likes/${postKey}`]: value,
+    [`${baseURL}users/${user.uid}/likes/${postKey}`]: value,
   }
 }
 
