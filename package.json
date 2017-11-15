@@ -29,12 +29,13 @@
     "moment": "^2.15.2",
     "native-promise-only": "^0.8.1",
     "prefix-lite": "0.0.2",
-    "react": "^15.3.2",
-    "react-addons-css-transition-group": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.0",
+    "react-dom": "^15.6.1",
     "react-markdown": "^2.4.2",
     "react-pure-render": "^1.0.2",
-    "refire-app": "^2.0.2"
+    "refire-app": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -60,7 +61,7 @@
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "react-icons": "^2.2.1",
-    "react-tap-event-plugin": "^1.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "rimraf": "^2.5.4",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
