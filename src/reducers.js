@@ -1,4 +1,4 @@
-import { USER_AUTHENTICATED, USER_UNAUTHENTICATED } from 'refire-app'
+import { USER_AUTHENTICATED, USER_UNAUTHENTICATED, firebase } from 'refire-app'
 
 export const userReducer = (state = null, action) => {
   const { payload } = action
